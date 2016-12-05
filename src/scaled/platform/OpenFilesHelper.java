@@ -11,6 +11,18 @@ import com.apple.eawt.OpenFilesHandler;
 
 public class OpenFilesHelper {
 
+  public static class Helper {
+    public static void register () {
+      Application macApp = Application.getApplication();
+      macApp.setOpenFileHandler(new OpenFilesHandler() {
+        public void openFiles (AppEvent.OpenFilesEvent event) {
+          if (listener != null) listener.openFiles(toPaths(event.getFiles()));
+          else launchFiles = toPaths(event.getFiles());
+        }
+      });
+    }
+  }
+
   public interface Listener {
     void openFiles (List<Path> files);
   }
@@ -21,13 +33,7 @@ public class OpenFilesHelper {
 
   public static void init () {
     if (IS_MACOS) {
-      Application macApp = Application.getApplication();
-      macApp.setOpenFileHandler(new OpenFilesHandler() {
-        public void openFiles (AppEvent.OpenFilesEvent event) {
-          if (listener != null) listener.openFiles(toPaths(event.getFiles()));
-          else launchFiles = toPaths(event.getFiles());
-        }
-      });
+      Helper.register();
     }
   }
 

@@ -33,7 +33,12 @@ public class OpenFilesHelper {
 
   public static void init () {
     if (IS_MACOS) {
-      Helper.register();
+      try {
+        Class.forName("scaled.platform.OpenFilesHelper$Helper").getMethod("register").invoke(null);
+      } catch (Throwable t) {
+        System.err.println("Unable to load macOS open files helper class:");
+        t.printStackTrace(System.err);
+      }
     }
   }
 

@@ -6,3 +6,6 @@ listen for Mac open files events without rendering it uncompilable on every othe
 
 Go Java for not providing a cross platform way to listen for OS "please open this file"
 notifications.
+
+**Note:** now that Scaled uses Java 9, this library is no longer necessary. `java.awt.Desktop` has
+cross-platform APIs to do the things we need.
